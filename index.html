@@ -2147,7 +2147,7 @@ indicatorSteps.forEach((stepCircle, index) => {
   });
 });
 
-// 2. Main Navigation Function
+// 2. Updated Navigation Function (Hides Next button on last step)
 function navigateTo(index) {
   // Hide current
   steps[currentStep].classList.remove("active");
@@ -2160,12 +2160,14 @@ function navigateTo(index) {
   steps[currentStep].classList.add("active");
   indicatorSteps[currentStep].classList.add("active");
 
-  // Update Button Labels & Visibility
+  // Handle "Previous" button visibility
   prevBtn.style.visibility = (currentStep === 0) ? "hidden" : "visible";
-  
+
+  // Handle "Next" button: Hide it completely on the final step
   if (currentStep === steps.length - 1) {
-    nextBtn.innerText = "Submit Claim";
+    nextBtn.style.display = "none";
   } else {
+    nextBtn.style.display = "block";
     nextBtn.innerText = "Next Step";
   }
 
@@ -2173,18 +2175,15 @@ function navigateTo(index) {
   document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
 }
 
-// 3. Keep the Next/Back buttons working for linear users
+// 3. Updated Next/Back logic
 function changeStep(n) {
   let newStep = currentStep + n;
   
-  // Prevent going out of bounds
+  // Only navigate if the step actually exists
   if (newStep >= 0 && newStep < steps.length) {
     navigateTo(newStep);
-  } else if (newStep >= steps.length) {
-    alert("Form Ready for Submission!"); 
-    // Trigger your final save/submit logic here
   }
-}  
+}
   
 </script>
 </main> 

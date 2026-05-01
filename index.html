@@ -246,6 +246,7 @@ label:has(.time-input-group)::first-line {
   }
 }
 
+ /* ---------- WIZARD CSS ---------- */ 
   /* Progress Tracker Container */
 .step-indicator {
   display: flex;
@@ -328,6 +329,7 @@ label:has(.time-input-group)::first-line {
   border-top: 1px solid var(--line);
 }
 
+ /* ---------- SIGNATURE CSS ---------- */ 
   /* Signature preview tiles */
   .sig-preview{
     width:100%; height:150px; border:1px dashed #bbb; border-radius:10px;
@@ -363,6 +365,24 @@ label:has(.time-input-group)::first-line {
   @media (max-width:720px){
     .policy-grid{grid-template-columns:1fr}
   }
+
+  .btn-set-today {
+  margin-left: 8px;
+  padding: 4px 10px !important;
+  font-size: 0.75rem !important;
+  height: auto !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  background: transparent;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.btn-set-today:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+}
 </style>
 </head>
 <body>
@@ -398,7 +418,7 @@ label:has(.time-input-group)::first-line {
     <input id="ClmMed_Basicinfo_Year" class="persist date-input" placeholder="YYYY" type="text" maxlength="4" inputmode="numeric" pattern="\d*">
   </div>
 </div>
-
+ <button type="button" class="btn-set-today ghost" data-target="ClmMed_Basicinfo">Today</button>
    <div class="grid-2">
        <label style="flex:1">Agent Name
         <input id="ClmMed_Basicinfo_Agent" class="persist" type="text" placeholder="Enter name">
@@ -877,7 +897,7 @@ label:has(.time-input-group)::first-line {
   <label class="date-label">Date signed
     <span class="muted">(DD/MM/YYYY)</span>
   </label>
-    
+    <button type="button" class="btn-set-today ghost" data-target="ClmMed_Sign_PO">Today</button>
       <div class="date-inputs">
     <input id="ClmMed_Sign_PO_Day" class="persist date-input" placeholder="DD" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
     <input id="ClmMed_Sign_PO_Month" class="persist date-input" placeholder="MM" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
@@ -914,7 +934,7 @@ label:has(.time-input-group)::first-line {
   <label class="date-label">Date signed
     <span class="muted">(DD/MM/YYYY)</span>
   </label>
-    
+    <button type="button" class="btn-set-today ghost" data-target="ClmMed_Sign_Witness">Today</button>
       <div class="date-inputs">
     <input id="ClmMed_Sign_Witness_Day" class="persist date-input" placeholder="DD" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
     <input id="ClmMed_Sign_Witness_Month" class="persist date-input" placeholder="MM" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
@@ -2184,6 +2204,36 @@ function changeStep(n) {
     navigateTo(newStep);
   }
 }
+
+// Universal "Set to Today" Logic
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.classList.contains('btn-set-today')) {
+    e.preventDefault(); // Prevent wizard from jumping or form submitting
+    
+    // Get the ID prefix from the button's data-target
+    const prefix = e.target.getAttribute('data-target');
+    const now = new Date();
+    
+    // Values to set
+    const dateData = {
+      Day: String(now.getDate()).padStart(2, '0'),
+      Month: String(now.getMonth() + 1).padStart(2, '0'),
+      Year: String(now.getFullYear())
+    };
+
+    // Loop through Day, Month, and Year to set values
+    ['Day', 'Month', 'Year'].forEach(part => {
+      const input = document.getElementById(`${prefix}_${part}`);
+      if (input) {
+        input.value = dateData[part];
+        
+        // IMPORTANT: Trigger the 'input' event so your 
+        // localStorage/Persistence logic saves the new data!
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+  }
+});  
   
 </script>
 </main> 

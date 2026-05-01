@@ -411,6 +411,8 @@ label:has(.time-input-group)::first-line {
   <label class="date-label">Date submitted
     <span class="muted">(DD/MM/YYYY)</span>
   </label>
+
+
   <button type="button" class="btn-set-today ghost" data-target="ClmMed_Basicinfo">Today</button>
   <div class="date-inputs">
     <input id="ClmMed_Basicinfo_Day" class="persist date-input" placeholder="DD" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
@@ -418,7 +420,13 @@ label:has(.time-input-group)::first-line {
     <input id="ClmMed_Basicinfo_Year" class="persist date-input" placeholder="YYYY" type="text" maxlength="4" inputmode="numeric" pattern="\d*">
   </div>
 </div>
- 
+
+    <div class="row" style="margin-top:10px;">
+  <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background: #f0f7ff; padding: 10px; border-radius: 8px;">
+    <input id="Clm_Agent_Is_Witness" type="checkbox" class="persist">
+    <span style="font-weight:500; color:var(--accent);">Agent is also the Witness</span>
+  </label>
+</div> 
    <div class="grid-2">
        <label style="flex:1">Agent Name
         <input id="ClmMed_Basicinfo_Agent" class="persist" type="text" placeholder="Enter name">
@@ -426,6 +434,9 @@ label:has(.time-input-group)::first-line {
        <label style="flex:1">Agent Contact
         <input id="ClmMed_Basicinfo_Mobile" class="persist" type="text" placeholder="Enter contact">
       </label>
+     <label id="agentNircContainer" style="display: none;">Agent IC No.
+    <input id="ClmMed_Basicinfo_AgentNIRC" class="persist" type="text" placeholder="e.g. 800101-10-5566">
+  </label>
       <label style="flex:1">Agency Name
         <input id="ClmMed_Basicinfo_Agency" class="persist" type="text" value="DU LIFE GROUP SDN BHD">
       </label>

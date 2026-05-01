@@ -426,6 +426,16 @@ label:has(.time-input-group)::first-line {
        <label style="flex:1">Agent Contact
         <input id="ClmMed_Basicinfo_Mobile" class="persist" type="text" placeholder="Enter contact">
       </label>
+
+     <div class="row" style="margin-top:10px;">
+  <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background: #f0f7ff; padding: 10px; border-radius: 8px;">
+    <input id="Clm_Agent_Is_Witness" type="checkbox" class="persist">
+    <span style="font-weight:500; color:var(--accent);">Agent is also the Witness</span>
+  </label>
+</div>
+     <label id="agentNircContainer" style="display: none;">Agent IC No.
+    <input id="ClmMed_Basicinfo_AgentNIRC" class="persist" type="text" placeholder="e.g. 800101-10-5566">
+  </label>
       <label style="flex:1">Agency Name
         <input id="ClmMed_Basicinfo_Agency" class="persist" type="text" value="DU LIFE GROUP SDN BHD">
       </label>

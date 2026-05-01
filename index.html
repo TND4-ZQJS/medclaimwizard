@@ -411,14 +411,14 @@ label:has(.time-input-group)::first-line {
   <label class="date-label">Date submitted
     <span class="muted">(DD/MM/YYYY)</span>
   </label>
-  
+  <button type="button" class="btn-set-today ghost" data-target="ClmMed_Basicinfo">Today</button>
   <div class="date-inputs">
     <input id="ClmMed_Basicinfo_Day" class="persist date-input" placeholder="DD" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
     <input id="ClmMed_Basicinfo_Month" class="persist date-input" placeholder="MM" type="text" maxlength="2" inputmode="numeric" pattern="\d*">
     <input id="ClmMed_Basicinfo_Year" class="persist date-input" placeholder="YYYY" type="text" maxlength="4" inputmode="numeric" pattern="\d*">
   </div>
 </div>
- <button type="button" class="btn-set-today ghost" data-target="ClmMed_Basicinfo">Today</button>
+ 
    <div class="grid-2">
        <label style="flex:1">Agent Name
         <input id="ClmMed_Basicinfo_Agent" class="persist" type="text" placeholder="Enter name">

@@ -1150,6 +1150,58 @@ window.addEventListener("DOMContentLoaded", () => {
   /* --- END AUTO-TAB LOGIC --- */
 });
 
+/* ---AGENT IS WITNESS --- */
+const agentIsWitnessCheckbox = document.getElementById('Clm_Agent_Is_Witness');
+const agentNircContainer = document.getElementById('agentNircContainer');
+
+// Mapping: Source (Agent Section) -> Destination (Witness Section)
+const fieldPairs = [
+  { src: 'ClmMed_Basicinfo_Agent',     dest: 'ClmMed_Sign_Witness_Name' },
+  { src: 'ClmMed_Basicinfo_Mobile',    dest: 'ClmMed_Sign_Witness_Mobile' },
+  { src: 'ClmMed_Basicinfo_AgentNIRC',  dest: 'ClmMed_Sign_Witness_NIRC' }
+];
+
+function handleAgentWitnessLogic() {
+  const isChecked = agentIsWitnessCheckbox.checked;
+
+  // 1. Handle Visibility of the Agent IC Box
+  agentNircContainer.style.display = isChecked ? 'block' : 'none';
+
+  // 2. Handle Data Sync and Field Locking
+  fieldPairs.forEach(pair => {
+    const srcEl = document.getElementById(pair.src);
+    const destEl = document.getElementById(pair.dest);
+
+    if (isChecked) {
+      // Copy values
+      destEl.value = srcEl.value;
+      // Lock witness fields
+      destEl.readOnly = true;
+      destEl.classList.add('readonly-sync'); 
+      // Trigger persistence
+      destEl.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      // Unlock fields if user changes mind
+      destEl.readOnly = false;
+      destEl.classList.remove('readonly-sync');
+    }
+  });
+}
+
+// Listen for checkbox toggle
+agentIsWitnessCheckbox.addEventListener('change', handleAgentWitnessLogic);
+
+// Listen for typing in Agent fields to update Witness fields live
+fieldPairs.forEach(pair => {
+  document.getElementById(pair.src).addEventListener('input', () => {
+    if (agentIsWitnessCheckbox.checked) handleAgentWitnessLogic();
+  });
+});
+
+// Run on page load to restore state from LocalStorage
+window.addEventListener('load', () => {
+  setTimeout(handleAgentWitnessLogic, 300);
+});
 
 // ---------- EXPORT FILTER LOGIC ----------
 function shouldIncludeFieldByUI(fieldId) {
